@@ -1,5 +1,5 @@
 class Discussion < ActiveRecord::Base
-  belongs_to :tasks, dependent: :destroy
-  has_many :comments 
+  belongs_to :tasks 
+  has_many :comments, dependent: :destroy
   validates :title, presence: true
 end

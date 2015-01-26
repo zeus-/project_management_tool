@@ -1,0 +1,20 @@
+%h1 #{ @project.title }
+%h2 Description
+%p #{ @project.description }
+%p Due in #{ time_ago_in_words(@project.due_date) }
+%br
+= link_to "Edit", edit_project_path(@project)
+|
+= link_to "Delete", @project, method: :delete, data: { confirm: "Sure?" }
+
+%h2 Add tasks
+= render "/tasks/form"
+
+%br
+%h2 All Tasks
+ 
+- @project.tasks.each do |task|
+  = render "/tasks/task", task: task
+
+%br  
+

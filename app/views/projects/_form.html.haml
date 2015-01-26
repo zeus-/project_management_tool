@@ -1,0 +1,8 @@
+= simple_form_for @project, html: { class: 'form-horizontal' } do |f|
+  .container 
+    = f.input :title, label: "Title"
+    = f.input :description, label: "Description"
+    %p 
+      Ends on:
+      = f.date_field :due_date
+    = f.submit (@project.persisted? ? "Update" : "Create"), class: "btn btn-info"

@@ -1,0 +1,13 @@
+-if @task.errors.any?
+  %ul
+    -@task.errors.full_messages.each do |m|
+      %li
+        =m 
+= simple_form_for [@project, @task] do |f|
+  = f.input :title
+  = f.input :body
+  %p
+    Due date: 
+    = f.date_field :due_date
+    = f.submit (@task.persisted? ? "Update" : "Create"), class: "btn btn-info"
+ 
