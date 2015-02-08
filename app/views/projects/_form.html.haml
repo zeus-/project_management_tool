@@ -1,8 +1,16 @@
-= simple_form_for @project, html: { class: 'form-horizontal' } do |f|
-  .container 
+.well  
+  = simple_form_for @project, html: { class: 'form-horizontal' } do |f|
     = f.input :title, label: "Title"
     = f.input :description, label: "Description"
     %p 
-      Ends on:
+      = f.label :ends_on
       = f.date_field :due_date
+    = f.label :joiner_ids, "Select Memebers"
+    %br
+    = f.collection_check_boxes :joined_user_ids, User.all, :id, :full_name
+    %br
+    = f.label :tag_ids, "Select Tags"
+    %br
+    = f.collection_check_boxes :tag_ids, Tag.all, :id, :name
+    %br
     = f.submit (@project.persisted? ? "Update" : "Create"), class: "btn btn-info"

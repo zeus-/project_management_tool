@@ -1,11 +1,10 @@
 -if task.done? 
   = link_to "view #{task.title}", project_task_path(@project, task) 
-  = button_to "Mark as undone", project_task_path(@project, task,  {task: {done: false}}), method: :patch 
+  = link_to "Delete", project_task_path(@project, task), method: :delete, style: "color: red"
+  = button_to "Mark as undone", project_task_path(@project, task,  {task: {done: false}}), method: :patch, class: "btn btn-warning"
 - else
   .pull-right
     = link_to "view #{task.title}", project_task_path(@project, task) 
-    = button_to "Mark as done", project_task_path(@project, task,  {task: {done: true}}), method: :patch
-    = link_to "Delete", project_task_path(@project, task), method: :delete, class: "btn btn-danger"
-    %br
-    %br
+    = link_to "Delete", project_task_path(@project, task), method: :delete, style: "color: red"
+    = button_to "Mark as done", project_task_path(@project, task,  {task: {done: true}}), method: :patch, class: "btn btn-warning"
 

@@ -6,5 +6,9 @@ class HomeController < ApplicationController
   def about  
   end
 
+  def faves 
+    @faves = current_user.favourited_projects
+  end
+
 end
 

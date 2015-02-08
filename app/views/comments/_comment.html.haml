@@ -1,0 +1,6 @@
+.a-cmnt-div{:style => "border-bottom: 2px solid #aaa"}
+  %h6 look at my body from cmnts
+  = comment.body
+  %br
+  = link_to "Edit", edit_discussion_comment_path(discussion, comment) 
+  = link_to "Delete", discussion_comment_path(discussion, comment), method: :delete

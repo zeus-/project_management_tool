@@ -1,20 +1,43 @@
-%h1 #{ @project.title }
-%h2 Description
-%p #{ @project.description }
-%p Due in #{ time_ago_in_words(@project.due_date) }
-%br
-= link_to "Edit", edit_project_path(@project)
-|
-= link_to "Delete", @project, method: :delete, data: { confirm: "Sure?" }
+.well
+  %h1 #{ @project.title }
+  -@project.tags.each do |tag|
+    %b #{" #" + tag.name}
+  %h5 Description: #{ @project.description }
+  %h6 Due in #{ standard_date(@project.due_date) }
+  %h6 Created by #{ @project.user.first_name }
+  = link_to "Edit", edit_project_path(@project)
+  |
+  = link_to "Delete", @project, method: :delete, data: { confirm: "Sure?" }
+  %br
+  %br
+  - if user_signed_in? && current_user.has_faved?(@project) 
+    - @favourite = current_user.favourites.find_by_project_id(@project) 
+    = link_to "Unfavourite", project_favourite_path(@project, @favourite), class: "btn btn-danger", method: :delete
+  - else
+    = link_to "Favourite!", project_favourites_path(@project), class: "btn btn-primary", method: :post 
 
-%h2 Add tasks
-= render "/tasks/form"
-
-%br
-%h2 All Tasks
- 
-- @project.tasks.each do |task|
-  = render "/tasks/task", task: task
-
-%br  
-
+  %h5 Project Members: 
+  -@project.joined_users.each do |member|
+    = member.full_name + " | "
+  %br
+.well
+  %h2 Add tasks
+  = render "/tasks/form"
+  %br
+  %h2 All Tasks
+  .well
+    - @project.tasks.each do |task|
+      = render "/tasks/task", task: task 
+    %br
+.well  
+  %h2 Add Discussion
+  = render "/discussions/form"
+  
+  %br
+  %h2 All Discussions
+   
+  - @project.discussions.each do |discussion|
+    = render "/discussions/discussion", discussion: discussion
+  
+  %br  
+  

@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+["women", "me", "u", "if", "ur", "a", "woman"].each do |x|
+    Tag.create(name: x)
+end
+
+

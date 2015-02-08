@@ -1,11 +1,19 @@
 Rails.application.routes.draw do
 
-  root "home#index"
+  devise_for :users
+  root "projects#index"
 
   get "/about" => "home#about"
+  get "/faves" => "home#faves"
   
   resources :projects do 
     resources :tasks
+    resources :discussions
+    resources :joiners, only: [:create, :destroy]
+    resources :favourites, only: [:create, :destroy]
+  end
+  resources :discussions do
+    resources :comments
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

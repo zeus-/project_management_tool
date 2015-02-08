@@ -7,16 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container">
-    <nav class="navbar navbar-default"> 
+    <nav class="navbar navbar-inverse"> 
+    <div class="container">
       <ul class="nav navbar-nav">
-        <li><%= link_to "Home", root_path, class: "btn btn-default" %></li>
-        <li><%= link_to "About", about_path, class: "btn btn-default" %></li>
-        <li><%= link_to "All projects", projects_path, class: "btn btn-default" %></li>
-        <li><%= link_to "New project", new_project_path, class: "btn btn-warning" %></li>
+        <li><%= link_to "Home", root_path  %></li>
+        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "All projects", projects_path %></li> 
+        <li><%= link_to "New project", new_project_path %></li>   
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to "My Faves", faves_path, style: "border: 1px solid blue" %></li>
+          <li style="color: #fff; line-height: 52px;"> &nbsp; &nbsp; Hello <%= current_user.first_name if current_user.first_name.present? %></li>
+          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete%></li>
+        <% else %>
+          <li class="pull-right"><%= link_to "Sign In", new_user_session_path%></li>
+        <li><%= link_to "Sign Up", new_user_registration_path %></li>
+        <% end %>
+      </ul>
+    </div>
     </nav>
-
+  <div class="container">
     <%= flash_messages %>
 
     <%= yield %>

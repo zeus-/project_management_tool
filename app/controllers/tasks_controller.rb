@@ -1,17 +1,16 @@
 class TasksController < ApplicationController
-
-  def index
-   # @tasks = Task.all
-  end
-
+  before_action :authenticate_user!
+  before_action :find_project
+  
   def create
-    @project = Project.find(params[:project_id])
-    @task = @project.tasks.new(task_params) 
+    @task = Task.new task_params
+    @task.project = @project
+    @task.user = current_user
     if @task.save
       redirect_to @project, notice: "Made new incomplete task!"
     else
-      flash.now[:alert] = "Sorry something went wrong!"
-      render "projects/show"
+      flash[:alert] = "Please correct your task form!"
+      redirect_to project_path(@project, task: task_params)
     end
   end
 
@@ -21,29 +20,31 @@ class TasksController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:project_id])
     @task = @project.tasks.find(params[:id]) 
-    if @task.update_attributes(task_params) 
+    if @task.update(task_params) 
       redirect_to @project, notice: "Updated successfully"
     else
-      flash.now[:alert] = "Update failed"
-      render "/projects/edit"
+      flash[:alert] = "Sorry something went wrong!"
+      redirect_to project_task_path(@project, @task, task: task_params)
     end
   end
 
   def destroy
-    @project = Project.find(params[:project_id])
     @task = @project.tasks.find(params[:id]) 
-    if @task.destroy
+    if @task.user == current_user && @task.destroy
       redirect_to @project, notice: "Task deleted"
     else
-      flash.now[:alert] = "Failed to delete!"
-      render "/projects/show"
+      flash[:alert] = "Failed to delete!"
+      redirect_to @project 
     end
   end
 
   private 
     def task_params
       params.require(:task).permit([:title, :body, :done, :due_date])
+    end
+    
+    def find_project
+      @project = Project.find(params[:project_id])
     end
 end

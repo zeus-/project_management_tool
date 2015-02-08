@@ -12,6 +12,9 @@
 !/log/.keep
 /tmp
 
+# Ignore email vars
+/config/initializers/email_vars.rb
+
 # Ignore other unneeded files
 database.yml
 *.swp

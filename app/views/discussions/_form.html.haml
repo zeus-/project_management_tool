@@ -1,0 +1,6 @@
+= simple_form_for [@project, @discussion] do |f|
+  = f.input :title
+  = f.input :body
+  %p
+    = f.submit (@discussion.persisted? ? "Update" : "Create"), class: "btn btn-info"
+ 

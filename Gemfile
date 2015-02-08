@@ -54,7 +54,7 @@ end
 
 group :development do
   gem 'hirb'
-  gem 'better_errors'
+  #gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'interactive_editor'

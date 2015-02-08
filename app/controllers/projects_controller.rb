@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   
-  before_action :find_project, except: [:index, :new, :create, :show]
+  before_action :find_project, except: [:index, :new, :create]
+  before_action :authenticate_user!, except: [:index, :show] 
   
   def index
     @projects = Project.all
@@ -12,6 +13,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params) 
+    @project.user = current_user
     if @project.save
       redirect_to projects_path, notice: "Congrats, you have initialized a project!"
     else
@@ -21,15 +23,29 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id] || params[:project_id])
-    @task = Task.new
+    if params[:task]
+      @task = Task.new(params.require(:task).permit([:title, :body, :done, :due_date]))
+    else
+      @task = Task.new
+    end
+    if params[:discussion]
+      @discussion = Discussion.new(params.require(:discussion).permit([
+                                                    :title, :body]))
+    else 
+      @discussion = Discussion.new
+    end
+    if params[:comment]
+      @comment = Comment.new(params.require(:comment).permit([:body]))
+    else
+      @comment = Comment.new
+    end
   end
 
   def edit
   end
 
   def update
-    if @project.update_attributes(project_params) 
+    if @project.update project_params 
       redirect_to @project, notice: "Updated successfully"
     else
       flash.now[:alert] = "Update failed"
@@ -51,7 +67,9 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
     def project_params
-      params.require(:project).permit([:title, :description, :due_date])
+      params.require(:project).permit(:title, :description,
+                                      :due_date, { joined_user_ids: []},
+                                      {tag_ids: []})
     end
 
 end

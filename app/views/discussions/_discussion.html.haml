@@ -1,0 +1,15 @@
+.well
+  %h3 Discussion: #{ discussion.title }
+  %h5 Body: #{ discussion.body }
+  %h5 Posted by : #{ discussion.user.first_name }
+  %br
+  =link_to "edit", edit_project_discussion_path(@project, discussion)  
+  =link_to "delete", project_discussion_path(@project, discussion), method: :delete  
+  %h4 Add cmnt!
+  = render partial: "/comments/form", locals: {discussion: discussion} 
+  %h5 Comments for #{ discussion.title } 
+  - discussion.comments.each do |comment|
+    = render "/comments/comment", discussion: discussion, comment: comment
+%hr
+
+

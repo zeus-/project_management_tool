@@ -14,4 +14,7 @@ module ApplicationHelper
     when :alert then "alert alert-danger"
     end
   end
+  def standard_date(date)
+    date.strftime("%Y-%b-%d") if date
+  end
 end
