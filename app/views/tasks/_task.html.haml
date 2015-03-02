@@ -1,10 +1,15 @@
--if task.done? 
-  = link_to "view #{task.title}", project_task_path(@project, task) 
-  = link_to "Delete", project_task_path(@project, task), method: :delete, style: "color: red"
-  = button_to "Mark as undone", project_task_path(@project, task,  {task: {done: false}}), method: :patch, class: "btn btn-warning"
-- else
-  .pull-right
-    = link_to "view #{task.title}", project_task_path(@project, task) 
-    = link_to "Delete", project_task_path(@project, task), method: :delete, style: "color: red"
-    = button_to "Mark as done", project_task_path(@project, task,  {task: {done: true}}), method: :patch, class: "btn btn-warning"
-
+.well{id: dom_id(task), style: "margin-bottom: 100px;"}
+  -if task.done? 
+    .pull-left
+      = link_to "view #{task.title}", project_task_path(@project, task) 
+      = link_to "Delete", project_task_path(@project, task), remote: true, method: :delete, style: "color: red"
+      %h5 Created by: #{ task.user.first_name if task.user.present? }
+      = button_to "Mark as undone", project_task_path(@project, task,  {task: {done: false}}), remote: true, method: :patch, class: "btn btn-warning"
+  - else
+    .pull-right
+      = link_to "view #{task.title}", project_task_path(@project, task) 
+      = link_to "Delete", project_task_path(@project, task), remote: true, method: :delete, style: "color: red"
+      %h5 Created by: #{ task.user.first_name if task.user.present? }
+      = button_to "Mark as done", project_task_path(@project, task,  {task: {done: true}}), remote: true, method: :patch, class: "btn btn-warning"
+  
+  

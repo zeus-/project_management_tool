@@ -1,0 +1,8 @@
+var $value = $("#<%= dom_id(@task) %>").find(".btn").attr("value")
+<% if @task.done === true %>
+  $("#<%= dom_id(@task) %>").toggleClass("pull-left");
+  $("#<%= dom_id(@task) %>").find(".btn").attr("value", "Complete!");
+<% else %>
+  $("#<%= dom_id(@task) %>").toggleClass("pull-right");
+  $("#<%= dom_id(@task) %>").find(".btn").attr("value", "not complete");
+ <% end %>

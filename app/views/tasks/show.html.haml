@@ -3,6 +3,11 @@
   %h2 Title: #{@task.title}
   %h3 Description: #{ @task.body}
   %h3 Due in: #{ time_ago_in_words(@task.due_date) if @task.due_date }
+  -if @task.user.present? 
+    %h5 Created by: #{@task.user.first_name} 
   %br
-  =render "form"
-  
+  -if @task.user == current_user 
+    =render "form" 
+  -else
+    %h4 Please sign in as the task owner in order to edit. Thank you
+    

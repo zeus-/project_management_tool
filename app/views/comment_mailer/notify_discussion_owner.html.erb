@@ -1,2 +1,9 @@
-<p>Hello <%= @user.first_name %>,</p>
+<p>Hey <%= @user.first_name %>,</p>
 
+<p><%= @comment.user.first_name %> commented on your <%= @discussion.title %> discussion </p>
+
+<p>The comment body is: <%= @comment.body %></p>
+
+<p>Regards,</p>
+
+<p>The PMS tool</p>

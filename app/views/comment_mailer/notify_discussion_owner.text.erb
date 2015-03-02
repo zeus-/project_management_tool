@@ -1,5 +1,10 @@
-Hello #{@user.first_name}
-#{ @comment.user } commented on your #{ @discussion.title } discussion.
-The comment is: #{ @comment.body }
+Hey <%= @user.first_name %>,
+
+<%= @comment.user.first_name %> commented on your <%= @discussion.title %> discussion 
+
+The comment body is: <%= @comment.body %>
+
 Regards,
-The PMS tool.
+
+The PMS tool
+

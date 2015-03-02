@@ -3,17 +3,23 @@ class CommentsController < ApplicationController
   before_action :find_discussion
 
   def create
-    @comment = @discussion.comments.new(comment_params) 
-    @project = @discussion.project
+    @comment = Comment.new(comment_params) 
+    #@project = @discussion.project
+    @comment.discussion = @discussion 
     @comment.user = current_user
+    respond_to do |f|
     if @comment.save
       unless @discussion.user == current_user
-        CommentMailer.notify_discussion_owner(@comment).deliver_now
+        CommentMailer.delay.notify_discussion_owner(@comment)
       end
-      redirect_to @project, notice: "Cmnted on page"
+      f.js { render }
+      f.html { redirect_to @project, notice: "Cmnted on page" }
     else
-      flash[:alert] = "plz include a comment body!"
+      f.js { render }
+      f.html { flash[:alert] = "plz include a comment body!"
       redirect_to project_path(@project, comment: comment_params)
+      }
+    end 
     end
   end
 
@@ -34,12 +40,17 @@ class CommentsController < ApplicationController
   def destroy
     @comment = @discussion.comments.find(params[:id]) 
     @project = @discussion.project
+    respond_to do |f|
     if @comment.user == current_user && @comment.destroy
-      redirect_to @project, notice: "cmnt deleted"
+      f.js { render }
+      f.html { redirect_to @project, notice: "cmnt deleted" }
     else
-      flash[:alert] = "You cant destroy this comment!"
+      f.js { render }
+      f.html { flash[:alert] = "You cant destroy this comment!"
       redirect_to project_path(@project)
+      }
     end
+    end 
   end
 
   private 

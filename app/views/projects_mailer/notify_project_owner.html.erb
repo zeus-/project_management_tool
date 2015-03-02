@@ -1,0 +1,37 @@
+<h3>Hello <%= @user.first_name %>,</p>
+
+<h3> Projects created by <%= @user.full_name %> </p>
+
+<h4>Here's is today's summary of discussions and tasks for your projects: </p>
+<% @projects.each do |p| %>
+  <h3><%= link_to p.title, p %> </h3>
+
+  <p><u> New Discussions </u></p>
+  <hr>
+  <% if p.discussions.present? %>
+    <%  p.discussions.each do |d| %>
+      <p> <strong><i>  Title: </i></strong> <%= d.title %> </p>
+      <% if d.body.present? %>
+        <p> <strong><i>  Description: </i></strong><%= d.body.split.first(3).join(' ') + "..." %> </p>
+        <hr>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  <p><u> New tasks</u></p>
+  <% if p.tasks.present? %>
+    <hr>
+    <%  p.tasks.each do |t| %>
+      <p> <strong><i>  Title: </i></strong> <%= t.title %> </p>
+      <% if t.body.present? %>
+        <p> <strong><i>  Description: </i></strong><%= t.body.split.first(3).join(' ') + "..." %> </p>
+        <hr>
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<p>Regards,</p>
+<p>The PMS Tool</p>
+

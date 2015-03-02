@@ -1,0 +1,7 @@
+<% if @task.errors.any? %>
+  $("#new_task").html("<%= j render "/tasks/form" %>");
+<% else %>
+  $(".tasks").prepend("<%= j render partial: '/tasks/task', locals: {task: @task} %>");
+  <% @task = Task.new %>
+  $("#new_task").html("<%= j render "/tasks/form" %>");
+<% end %>

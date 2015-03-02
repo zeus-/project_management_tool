@@ -21,11 +21,11 @@
     = member.full_name + " | "
   %br
 .well
-  %h2 Add tasks
+  %h2 Add a task
   = render "/tasks/form"
   %br
-  %h2 All Tasks
-  .well
+  %h2 The task wall
+  .well.tasks{style: "margin-bottom: 200px;"}
     - @project.tasks.each do |task|
       = render "/tasks/task", task: task 
     %br

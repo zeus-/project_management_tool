@@ -1,0 +1,32 @@
+Hello <%= @user.first_name %>,
+Projects created by <%= @user.full_name %> 
+
+Here's is today's summary of discussions and tasks for your projects: 
+<% @projects.each do |p| %>
+  <%= link_to p.title, p %> 
+  
+  New Discussions 
+  <% if p.discussions.present? %>
+    <%  p.discussions.each do |d| %>
+       Title:  <%= d.title %> 
+      <% if d.body.present? %>
+         Description: <%= d.body.split.first(3).join(' ') + "..." %> 
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  New tasks
+  <% if p.tasks.present? %>
+    <%  p.tasks.each do |t| %>
+      Title:  <%= t.title %> 
+      <% if t.body.present? %>
+        Description: <%= t.body.split.first(3).join(' ') + "..." %> 
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+Regards,
+The PMS Tool
+

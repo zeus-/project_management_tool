@@ -2,6 +2,6 @@
   .droopy.well.col-md-12
     %h2 #{ link_to p.title, project_path(p) }
     %p Description: #{ p.description }
-    %p Due in 
+    %p Created by: #{ p.user.full_name }
     - if p.due_date.present? 
-      = time_ago_in_words(p.due_date) 
+      %p Due in #{ time_ago_in_words(p.due_date) } 

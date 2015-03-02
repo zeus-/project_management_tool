@@ -20,6 +20,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1.0'
 gem 'delayed_job_active_record'
+gem "delayed_job_web"
 gem 'sprockets' 
 gem 'bcrypt-ruby', '3.1.2'
 gem 'simple_form', git: 'https://github.com/plataformatec/simple_form.git'
