@@ -16,7 +16,7 @@
 /config/initializers/email_vars.rb
 
 # Ignore other unneeded files
-database.yml
+/config/database.yml
 *.swp
 *~
 .project
